@@ -7,12 +7,10 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Tymon\JWTAuth\Exceptions\JWTException;
 
-class APIController extends Controller
-{
+class APIController extends Controller{
     public $loginAfterSignUp = true;
 
-    public function login(Request $request)
-    {
+    public function login(Request $request){
     	$token = null;
 
     	$camposJson = json_decode($request->getContent(), JSON_OBJECT_AS_ARRAY);
@@ -24,23 +22,19 @@ class APIController extends Controller
     										'message' => 'Credenciais incorretas'], 401);
     		}
     	} catch(JWTException $e){
-
     		return response()->json(['error' => 'Token não criado'],500);
     	}
 
     	return response()->json(['success' => true, 'token' => $token]);
     }
 
-    public function logout(Request $request)
-    {
+    public function logout(Request $request){
     	try{
-
     		JWTAuth::invalidate(JWTAuth::getToken());
 
     		return response()->json([	'success' => true,
     									'message' => 'Adeus :-( ']);
     	}catch(JWTException $e){
-
     		return response()->json([	'success' => false,
     									'message' => 'Erro, ficarás comigo',
     									'error_msg' => var_export($e)], 500);

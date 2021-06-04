@@ -8,13 +8,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Traits\HasRoles;
 
-class ClientesController extends Controller
-{
+class ClientesController extends Controller{
     use HasFactory;
     use HasRoles;
 
-
-	//Essa é uma forma de controlar o acesso
 	public function __construct(){
 		$this->middleware('permission:cliente-list',['only' => ['index','show']]);
 		$this->middleware('permission:cliente-create',['only' => ['create','store']]);
@@ -22,6 +19,17 @@ class ClientesController extends Controller
 		$this->middleware('permission:cliente-delete',['only' => ['destroy']]);
 	}
 
+    public function getCliente($id){
+        $cliente = Clientes::find($id);
+
+        return $cliente;
+    }
+
+    public function checkCliente(int $id){
+        $cliente = Clientes::find($id);
+
+        return $cliente ?? false;
+    }
     public function listar(){
     	$clientes = Clientes::all();
 

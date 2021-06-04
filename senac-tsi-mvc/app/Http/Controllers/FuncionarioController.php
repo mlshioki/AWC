@@ -5,8 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Funcionario;
 
-class FuncionarioController extends Controller
-{
+class FuncionarioController extends Controller{
     /**
      * Display a listing of the resource.
      *
@@ -50,12 +49,10 @@ class FuncionarioController extends Controller
     {
         $funcionario = Funcionario::find($id);
 
-        if ($funcionario) {
-
+        if ($funcionario){
             return $funcionario;
 
-        } else {
-
+        } else{
             return json_encode([$id => 'nao existe']);
         }
     }
@@ -82,16 +79,13 @@ class FuncionarioController extends Controller
     {
         $funcionario = Funcionario::find($id);
 
-        if ($funcionario) {
-
+        if ($funcionario){
             $json = $request->getContent();
             $atualizacao = json_decode($json, JSON_OBJECT_AS_ARRAY);
             $funcionario->nome = $atualizacao['nome'];
 
             $ret = $funcionario->update() ? [$id => 'atualizado'] : [$id => 'erro'];
-
-        } else {
-
+        } else{
             $ret = [$id => 'nao existe'];
         }
 
@@ -108,12 +102,9 @@ class FuncionarioController extends Controller
     {
         $funcionario = Funcionario::find($id);
 
-        if ($funcionario) {
-
+        if ($funcionario){
             $ret = $funcionario->delete() ? [$id => 'apagado'] : [$id => 'erro'];
-
-        } else {
-
+        } else{
             $ret = [$id => 'nao existe'];
         }
 
